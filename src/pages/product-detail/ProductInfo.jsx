@@ -7,8 +7,8 @@ const ProductInfo = () => {
   
   return (
     <>
-      <h1 className={"text-[40px] font-[400] mb-[47px]"}>One Life Graphic T-shirt</h1>
-      <div className={"flex gap-[12px] text-[32px] mb-[15px]"}>
+      <h1 className={"md:text-[40px] text-[26px] font-[400] md:mb-[47px] mb-[10px]"}>Футболка с рисунком One Life</h1>
+      <div className={"flex gap-[12px] md:text-[32px] text-[18px] mb-[15px]"}>
         <span>$260</span>
         <span className={"text-[grey]"}>$300</span>
       </div>
