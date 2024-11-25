@@ -7,7 +7,6 @@ const Cards = () => {
     const url = "https://673d89de0118dbfe86079da2.mockapi.io/api/v1/goods";
     const response = await fetch(url);
     const data = await response.json();
-    console.log(data);
     setGoods(data);
   };
 
