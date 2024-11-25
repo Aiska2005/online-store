@@ -16,10 +16,11 @@ const Footer = () => {
             >
               <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
             </svg>
-            <span class="ml-3 text-xl">Tailblocks</span>
+            <span class="ml-3 text-xl">Bulut</span>
           </a>
           <p class="mt-2 text-sm text-gray-500">
-            Air plant banjo lyft occupy retro adaptogen indego
+            We have clothes that suits your style and which you’re proud to
+            wear. From women to men.
           </p>
         </div>
         <div class="flex-grow flex flex-wrap md:pl-20 -mb-10 md:mt-0 mt-10 md:text-left text-center">
@@ -104,15 +105,15 @@ const Footer = () => {
       <div class="bg-gray-100">
         <div class="container mx-auto py-4 px-5 flex flex-wrap flex-col sm:flex-row">
           <p class="text-gray-500 text-sm text-center sm:text-left">
-            © 2020 Tailblocks —
-            <a
+            Shop.co © 2024-2025, All Rights Reserved
+            {/* <a
               href="https://twitter.com/knyttneve"
               rel="noopener noreferrer"
               class="text-gray-600 ml-1"
               target="_blank"
             >
               @knyttneve
-            </a>
+            </a> */}
           </p>
           <span class="inline-flex sm:ml-auto sm:mt-0 mt-2 justify-center sm:justify-start">
             <a class="text-gray-500">
