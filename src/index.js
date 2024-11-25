@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./Components/Layout/Layout";
 import "./Styles/index.css";
 import Cards from "./Components/Cards/Cards";
+import Pay from "./Components/Pay /Pay";
 
 ReactDOM.render(
   <BrowserRouter
@@ -13,7 +14,8 @@ ReactDOM.render(
   >
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route path="/test" element={<Cards />} />
+        <Route path="/main" element={<Cards />} />
+        <Route path="/pay" element={<Pay />} />
       </Route>
     </Routes>
   </BrowserRouter>,

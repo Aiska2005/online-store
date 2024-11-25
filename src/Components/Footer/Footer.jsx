@@ -1,3 +1,5 @@
+import { footerData } from "../../Shared/Constant";
+
 const Footer = () => {
   return (
     <footer class="text-gray-600 body-font">
@@ -23,83 +25,21 @@ const Footer = () => {
             wear. From women to men.
           </p>
         </div>
-        <div class="flex-grow flex flex-wrap md:pl-20 -mb-10 md:mt-0 mt-10 md:text-left text-center">
-          <div class="lg:w-1/4 md:w-1/2 w-full px-4">
-            <h2 class="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">
-              CATEGORIES
-            </h2>
-            <nav class="list-none mb-10">
-              <li>
-                <a class="text-gray-600 hover:text-gray-800">First Link</a>
-              </li>
-              <li>
-                <a class="text-gray-600 hover:text-gray-800">Second Link</a>
-              </li>
-              <li>
-                <a class="text-gray-600 hover:text-gray-800">Third Link</a>
-              </li>
-              <li>
-                <a class="text-gray-600 hover:text-gray-800">Fourth Link</a>
-              </li>
-            </nav>
-          </div>
-          <div class="lg:w-1/4 md:w-1/2 w-full px-4">
-            <h2 class="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">
-              CATEGORIES
-            </h2>
-            <nav class="list-none mb-10">
-              <li>
-                <a class="text-gray-600 hover:text-gray-800">First Link</a>
-              </li>
-              <li>
-                <a class="text-gray-600 hover:text-gray-800">Second Link</a>
-              </li>
-              <li>
-                <a class="text-gray-600 hover:text-gray-800">Third Link</a>
-              </li>
-              <li>
-                <a class="text-gray-600 hover:text-gray-800">Fourth Link</a>
-              </li>
-            </nav>
-          </div>
-          <div class="lg:w-1/4 md:w-1/2 w-full px-4">
-            <h2 class="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">
-              CATEGORIES
-            </h2>
-            <nav class="list-none mb-10">
-              <li>
-                <a class="text-gray-600 hover:text-gray-800">First Link</a>
-              </li>
-              <li>
-                <a class="text-gray-600 hover:text-gray-800">Second Link</a>
-              </li>
-              <li>
-                <a class="text-gray-600 hover:text-gray-800">Third Link</a>
-              </li>
-              <li>
-                <a class="text-gray-600 hover:text-gray-800">Fourth Link</a>
-              </li>
-            </nav>
-          </div>
-          <div class="lg:w-1/4 md:w-1/2 w-full px-4">
-            <h2 class="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">
-              CATEGORIES
-            </h2>
-            <nav class="list-none mb-10">
-              <li>
-                <a class="text-gray-600 hover:text-gray-800">First Link</a>
-              </li>
-              <li>
-                <a class="text-gray-600 hover:text-gray-800">Second Link</a>
-              </li>
-              <li>
-                <a class="text-gray-600 hover:text-gray-800">Third Link</a>
-              </li>
-              <li>
-                <a class="text-gray-600 hover:text-gray-800">Fourth Link</a>
-              </li>
-            </nav>
-          </div>
+        <div className="flex-grow flex flex-wrap md:pl-20 -mb-10 md:mt-0 mt-10 md:text-left text-center">
+          {footerData.map((section, index) => (
+            <div key={index} className="lg:w-1/4 md:w-1/2 w-full px-4">
+              <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">
+                {section.title}
+              </h2>
+              <nav className="list-none mb-10">
+                {section.links.map((link, i) => (
+                  <li key={i}>
+                    <a className="text-gray-600 hover:text-gray-800">{link}</a>
+                  </li>
+                ))}
+              </nav>
+            </div>
+          ))}
         </div>
       </div>
       <div class="bg-gray-100">

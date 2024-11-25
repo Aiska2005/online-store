@@ -20,7 +20,7 @@ const Cards = () => {
         <img
           alt="gallery"
           class="w-full object-cover h-full object-center block opacity-25 absolute inset-0"
-          src="https://dummyimage.com/820x340"
+          src="../../Assets/SlideBar/header.webp"
         />
         <div class="text-center relative z-10 w-full">
           <h2 class="text-2xl text-gray-900 font-medium title-font mb-2">
