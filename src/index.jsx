@@ -15,7 +15,6 @@ ReactDOM.render(
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route path="/test" element={<Cards />} />
-        <Route path="/test" element={<h4>Test</h4>} />
         <Route path="/product-detail/:id" element={<ProductDetailPage/>} />
       </Route>
     </Routes>
