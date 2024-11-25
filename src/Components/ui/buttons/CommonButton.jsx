@@ -3,7 +3,7 @@ const CommonButton = ({className, onClick, children}) => {
   return (
     <button
       onClick={onClick}
-      className={`py-[12px] px-[24px]  rounded-[62px] ${className}`} >{children}</button>
+      className={`md:py-[12px] md:px-[24px] px-[12px] py-[8px] rounded-[62px] ${className}`} >{children}</button>
   );
 };
 
