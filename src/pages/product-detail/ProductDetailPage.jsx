@@ -51,7 +51,7 @@ const ProductDetailPage = () => {
 						/>
 					</div>
 				</div>
-				<div className={"md:w-1/2 md:h-[568px] "}>
+				<div className={"md:w-1/2 "}>
 					<ProductInfo data={data}/>
 				</div>
 			</div>
