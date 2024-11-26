@@ -1,7 +1,7 @@
 class ProductApi {
   async getAllProducts() {
     try {
-      const response = await fetch('https://673d89de0118dbfe86079da2.mockapi.io/api/v1/goods/');
+      const response = await fetch('https://fakestoreapi.com/products/20');
       
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
