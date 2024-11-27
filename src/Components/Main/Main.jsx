@@ -21,7 +21,7 @@ const Main = () => {
         <img
           alt="gallery"
           className="w-full object-cover h-full object-center block opacity-25 absolute inset-0"
-          src="../../Assets/SlideBar/header.webp"
+          src="https://swjournal.ru/wp-content/uploads/2021/03/Eco-Friendly-tops.jpg"
         />
         <div className="text-center relative z-10 w-full">
           <h2 className="text-2xl text-gray-900 font-medium title-font mb-2">
@@ -34,7 +34,9 @@ const Main = () => {
       </div>
 
       <div className="container mx-auto px-4 md:p-0 flex flex-col items-center justify-center">
-        <h2 className="font-bold mb-6 text-center">NEW ARRIVALS</h2>
+        <h2 className="mb-6 text-[40px] font-extrabold leading-[48px] mb-6 text-center">
+          NEW ARRIVALS
+        </h2>
         <Link to="/product-detail/:id" className="mx-auto">
           <div className="flex flex-wrap justify-center">
             {goods?.map((item) => (
