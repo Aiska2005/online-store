@@ -2,9 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./Components/Layout/Layout";
-import Main from "./Components/Main/Main.jsx";
+import Main from "./Pages/Main/Main.jsx";
 import "./Styles/index.css";
-import Pay from "./Components/Pay /Pay";
+import Pay from "./Pages/Pay/Pay.jsx";
 import ProductDetailPage from "./Pages/ProductDetailPage/ProductDetailPage";
 
 ReactDOM.render(

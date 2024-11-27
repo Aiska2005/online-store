@@ -1,5 +1,5 @@
-import Order from "../Order/Order";
-import Cart from "../ui/cart/Cart";
+import Order from "../../Components/Order/Order";
+import Cart from "../../Components/ui/cart/Cart";
 
 const Pay = () => {
   const cartItems = [
