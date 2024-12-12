@@ -1,28 +1,20 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Layout from "./Components/Layout/Layout";
-import "./Styles/index.css";
-import Cards from "./Components/Cards/Cards";
-import ProductDetailPage from "./pages/product-detail/ProductDetailPage";
-import {Provider} from "react-redux";
+import { createRoot } from "react-dom/client";
+import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
+import App from "./app/App";
 import store from "./redux/store";
+import "./Styles/index.css";
 
-ReactDOM.render(
+
+createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <BrowserRouter
       future={{
         v7_relativeSplatPath: true,
-      }}
-    >
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route path="/test" element={<Cards />} />
-          <Route path="/product-detail/:id" element={<ProductDetailPage/>} />
-        </Route>
-      </Routes>
+        v7_startTransition: true,
+      }}>
+      <App />
     </BrowserRouter>
   </Provider>
-  ,
-  document.getElementById("root")
 );
+
