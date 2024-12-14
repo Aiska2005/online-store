@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import productApi from "../../service/product/product.api";
+import productApi from "../../service/product.api";
 import ProductInfo from "./ProductInfo";
 
 const ProductDetailPage = () => {
