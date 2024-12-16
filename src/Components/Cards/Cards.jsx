@@ -21,7 +21,7 @@ const Cards = () => {
   }, []);
 
   const handleViewAll = () => {
-    navigate("");
+    navigate("/product-all");
   };
 
   return (
@@ -56,7 +56,7 @@ const Cards = () => {
                   >
                     <img
                       alt="ecommerce"
-                      className="object-contain object-center w-[400px] sm:w-[300px] md:w-[350px] lg:w-[400px] h-auto block"
+                      className="object-contain object-center w-[600px] sm:w-[300px] md:w-[350px] lg:w-[400px] h-auto block"
                       src={item.images?.[0] || "https://dummyimage.com/420x260"}
                     />
                   </a>
