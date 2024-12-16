@@ -1,4 +1,4 @@
-import { footerData } from "../../Shared/Constant";
+import { footerData } from "../../Constant";
 
 const Footer = () => {
   return (

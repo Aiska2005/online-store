@@ -1,4 +1,4 @@
-import { supabase } from '../supabaseClient'; // Импортируем клиент Supabase
+import { supabase } from './supabaseClient'; // Импортируем клиент Supabase
 
 class FileUploadApi {
   constructor(bucketName) {
