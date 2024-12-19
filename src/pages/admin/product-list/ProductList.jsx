@@ -1,18 +1,19 @@
-import React, {useState, useEffect, useCallback} from 'react';
-import {Typography, Spin, Modal, Button} from 'antd';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Typography, Spin, Modal, Button } from 'antd';
 import ProductTable from './ProductTable';
 import productApi from '../../../service/product.api';
 import ProductImages from "./ProductImages";
 import ViewProductModal from "./ViewProductModal";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
-const {Title} = Typography;
+const { Title } = Typography;
 
 const ProductList = () => {
 	const [products, setProducts] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [selectedProduct, setSelectedProduct] = useState(null);
 	
+	// Fetch products
 	const fetchProducts = useCallback(async () => {
 		setLoading(true);
 		try {
@@ -29,36 +30,41 @@ const ProductList = () => {
 		fetchProducts();
 	}, [fetchProducts]);
 	
+	// Handle view product
 	const handleView = (id) => {
 		const product = products.find((product) => product.id === id);
-		setSelectedProduct(product);
+		if (product) {
+			setSelectedProduct(product);
+		}
 	};
 	
+	// Handle close modal
 	const handleCloseModal = () => {
 		setSelectedProduct(null);
 	};
 	
+	// Handle edit
 	const handleEdit = (id) => {
 		console.log(`Редактировать продукт с ID: ${id}`);
 	};
 	
+	// Handle delete
 	const handleDelete = (id) => {
 		console.log(`Удалить продукт с ID: ${id}`);
 	};
 	
 	return (
-		<div className="container mx-auto p-6">
+		<div className="p-6 w-full max-w-full overflow-x-hidden">
 			<div className={"flex justify-between"}>
 				<Title level={2}>Список продуктов</Title>
-				<Button>
-					<Link to="/add-product">
-						Добавить товар
-					</Link>
-				</Button>
+				<Link to="/add-product">
+					<Button type="primary">Добавить товар</Button>
+				</Link>
 			</div>
+			
 			{loading ? (
 				<div className="flex justify-center items-center">
-					<Spin size="large"/>
+					<Spin size="large" />
 				</div>
 			) : (
 				<ProductTable
@@ -69,7 +75,14 @@ const ProductList = () => {
 					handleView={handleView}
 				/>
 			)}
-			{selectedProduct && <ViewProductModal selectedProduct={selectedProduct} handleCloseModal={handleCloseModal}/>}
+			
+			{/* View product modal */}
+			{selectedProduct && (
+				<ViewProductModal
+					selectedProduct={selectedProduct}
+					handleCloseModal={handleCloseModal}
+				/>
+			)}
 		</div>
 	);
 };

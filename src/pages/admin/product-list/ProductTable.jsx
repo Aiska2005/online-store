@@ -1,7 +1,7 @@
-import {Table, Tag} from 'antd';
+import { Table, Tag } from 'antd';
 import ProductActions from './ProductActions';
 
-const ProductTable = ({  products, handleEdit, handleDelete, handleView }) => {
+const ProductTable = ({ products, handleEdit, handleDelete, handleView }) => {
   const columns = [
     {
       title: 'ID',
@@ -58,14 +58,13 @@ const ProductTable = ({  products, handleEdit, handleDelete, handleView }) => {
   ];
   
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto max-w-full">
       <Table
         columns={columns}
         dataSource={products}
         rowKey="id"
         pagination={{ pageSize: 30 }}
         bordered
-        scroll={{ x: 'max-content' }}
       />
     </div>
   );
