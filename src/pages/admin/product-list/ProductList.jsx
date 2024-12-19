@@ -57,7 +57,7 @@ const ProductList = () => {
 		<div className="p-6 w-full max-w-full overflow-x-hidden">
 			<div className={"flex justify-between"}>
 				<Title level={2}>Список продуктов</Title>
-				<Link to="/add-product">
+				<Link to="/admin/add-product">
 					<Button type="primary">Добавить товар</Button>
 				</Link>
 			</div>

@@ -12,21 +12,39 @@ class ProductApi {
 
     return data;
   }
-
-  // Получение товара по ID
+// Получение товара по ID с цветами
   async getProductById(productId) {
-    const { data, error } = await supabase
-      .from("products")
-      .select("*")
-      .eq("id", productId)
-      .single(); // Получаем только один товар
-
-    if (error) {
-      console.error("Error fetching product:", error);
+    try {
+      const {data, error} = await supabase
+        .from('products')
+        .select(`
+			    *,
+			    product_colors (
+			      color_id,
+			      colors (
+			        id,
+			        name
+			      )
+			    )
+			  `)
+        .eq('id', productId)
+        .single();
+      if (error) {
+        console.error('Error fetching product with colors:', error);
+        return null;
+      }
+      
+      // Формируем удобный объект с цветами
+      const productWithColors = {
+        ...data,
+        colors: data.product_colors.map((pc) => pc.colors), // Извлекаем массив цветов
+      };
+      
+      return productWithColors;
+    } catch (error) {
+      console.error('Unexpected error:', error);
       return null;
     }
-
-    return data;
   }
 
   // Получение товаров по категории
