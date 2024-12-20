@@ -1,4 +1,4 @@
-import { footerData } from "../../Constant";
+import { footerData } from "../../../Constant";
 
 const Footer = () => {
   return (

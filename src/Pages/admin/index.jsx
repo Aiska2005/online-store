@@ -25,9 +25,9 @@ const AdminPage = () => {
       </aside>
       
       {/* Main Content */}
-      <main className="flex-1 p-6">
+      <main className="flex-1 p-2">
         <h1 className="text-2xl font-bold mb-4">Admin Panel</h1>
-        <div className="bg-white shadow rounded p-6 h-full">
+        <div className="bg-white shadow rounded p-4 h-full">
           <Outlet />
         </div>
       </main>
