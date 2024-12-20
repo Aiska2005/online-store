@@ -42,6 +42,7 @@ const HomePage = () => {
 			<h2 className="text-4xl font-bold text-center text-gray-800 my-6 tracking-widest">
 				НОВЫЕ ПОСТУПЛЕНИЯ
 			</h2>
+			
 			{goods.length === 0 ? <div className={"flex items-center justify-center"}><Spin/></div> : (
 				<section className=" py-8 antialiased  md:py-12">
 					<div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
@@ -973,6 +974,8 @@ const HomePage = () => {
 					</form>
 				</section>
 			)}
+			
+			
 			{/* View All Button */}
 			<div className="flex justify-center mt-6">
 				<CommonButton
