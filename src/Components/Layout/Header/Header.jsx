@@ -7,7 +7,7 @@ const Header = () => {
     <header className="text-gray-600 body-font">
       <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
         <a className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
-          <span className="ml-3 text-xl">Bulut</span>
+          {/*<img className={"w-[160px]"} src="/logo.svg" alt=""/>*/}
         </a>
         <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
           <a className="mr-5 hover:text-gray-900">On Sale</a>
@@ -22,7 +22,16 @@ const Header = () => {
         </nav>
 
         <div className="inline-flex gap-3 items-center border-0 py-1 px-3 rounded text-base mt-4 md:mt-0">
-          <AiOutlineShoppingCart />
+          <div className={"relative"}>
+            <AiOutlineShoppingCart />
+            <span
+              className={
+                "absolute -top-[6px] -right-[10px] bg-[black] text-[12px] text-white rounded-[10px] w-4 h-4 flex items-center justify-center"
+              }
+            >
+              3
+            </span>
+          </div>
           <AiOutlineUser />
         </div>
       </div>

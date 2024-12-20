@@ -1,0 +1,11 @@
+.divColors{
+    @apply text-[#00000099] pt-[24px] pb-[16px];
+
+}
+
+.circleDivWrap{
+    @apply flex gap-[16px] pb-[24px] border-b;
+}
+.circleDivColor{
+    @apply flex h-[37px] w-[37px] rounded-full bg-[#4F4631] items-center justify-center text-[white]
+}
