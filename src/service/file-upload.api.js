@@ -6,7 +6,7 @@ class FileUploadApi {
     formData.append('upload_preset', 'ml_default');
     formData.append('folder', path);
     
-    const response = await fetch('https://api.cloudinary.com/v1_1/dikrrxazc/image/upload', {
+    const response = await fetch(process.env.REACT_APP_CLOUDINARY_URL+'/image/upload', {
       method: 'POST',
       body: formData,
     });
