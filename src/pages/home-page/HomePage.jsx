@@ -203,9 +203,15 @@ const HomePage = () => {
                 </div>
               </div>
             </div>
+
             <div className="mb-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-4">
               {goods.map(({ id, images, name, price }) => (
-                <ProductCard image={images?.[0]} name={name} price={price} />
+                <ProductCard
+                  image={images?.[0]}
+                  name={name}
+                  price={price}
+                  id={id}
+                />
               ))}
             </div>
           </div>
@@ -1802,7 +1808,7 @@ const HomePage = () => {
 
 export default HomePage;
 
-export const ProductCard = ({ image, name, price }) => {
+const ProductCard = ({ image, name, price, id }) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
   const handleFavoriteClick = () => {
@@ -1818,7 +1824,7 @@ export const ProductCard = ({ image, name, price }) => {
         <div className="mb-4 flex items-center justify-between gap-4">
           <div className="mt-2 flex items-center gap-2">
             <div className="flex items-center">
-              {[...Array(5)].map((_, index) => (
+              {[...Array(5)].map((item, index) => (
                 <svg
                   key={index}
                   className="h-4 w-4 text-yellow-400"
@@ -1834,26 +1840,28 @@ export const ProductCard = ({ image, name, price }) => {
           </div>
           <div className="flex items-center justify-end gap-1">
             <button type="button" title="Quick look" className="rounded-lg p-2">
-              <span className="sr-only">Quick look</span>
-              <svg
-                className="h-5 w-5"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"
-                />
-                <path
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                />
-              </svg>
+              <a href={`/product-detail/${id}`}>
+                <span className="sr-only">Quick look</span>
+                <svg
+                  className="h-5 w-5"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"
+                  />
+                  <path
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                  />
+                </svg>
+              </a>
             </button>
 
             <button

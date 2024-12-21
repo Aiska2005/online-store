@@ -1,41 +1,47 @@
 import React from "react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { AiOutlineUser } from "react-icons/ai";
+import { IoSearchOutline } from "react-icons/io5";
 
 const Header = () => {
   return (
-    <header className="text-gray-600 body-font">
-      <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-        <a className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
-          {/*<img className={"w-[160px]"} src="/logo.svg" alt=""/>*/}
+    <header className="text-gray-600 body-font border-b border-gray-200">
+      <div className="container mx-auto flex flex-wrap p-5 flex-row items-center justify-between">
+        <a
+          className="flex title-font font-medium items-center text-gray-900"
+          href="/"
+        >
+          {/*<img className="w-[160px]" src="/logo.svg" alt="Logo" />*/}
+          <span className="text-xl">BULUT</span>
         </a>
-        <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-          <a className="mr-5 hover:text-gray-900">On Sale</a>
-          <a className="mr-5 hover:text-gray-900">New Arrivals</a>
-          <input
-            className="bg-slate-200 p-1 rounded"
-            placeholder="type"
-            type="text"
-            size="40"
-            name="one-line"
-          />
-        </nav>
 
-        <div className="inline-flex gap-3 items-center border-0 py-1 px-3 rounded text-base mt-4 md:mt-0">
-          <div className={"relative"}>
-            <AiOutlineShoppingCart />
-            <span
-              className={
-                "absolute -top-[6px] -right-[10px] bg-[black] text-[12px] text-white rounded-[10px] w-4 h-4 flex items-center justify-center"
-              }
-            >
+        <div className="flex items-center gap-6 flex-grow max-w-3xl">
+          <nav className="hidden md:flex gap-6">
+            <a className="hover:text-gray-900">В продаже</a>
+            <a className="hover:text-gray-900">Новые поступления</a>
+          </nav>
+          <div className="flex items-center bg-gray-100 rounded-full px-4 py-2 shadow-md w-full md:max-w-md">
+            <IoSearchOutline className="h-5 w-5 text-gray-400" />
+            <input
+              className="bg-transparent focus:outline-none px-4 flex-grow text-gray-800 placeholder-gray-500"
+              placeholder="Search for products..."
+              type="text"
+            />
+          </div>
+        </div>
+
+        <div className="flex items-center gap-4 md:gap-6">
+          <a href="/cart" className="relative">
+            <AiOutlineShoppingCart className="h-6 w-6" />
+            <span className="absolute -top-1 -right-2 bg-black text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
               3
             </span>
-          </div>
-          <AiOutlineUser />
+          </a>
+          <AiOutlineUser className="h-6 w-6" />
         </div>
       </div>
     </header>
   );
 };
+
 export default Header;

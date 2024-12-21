@@ -93,11 +93,13 @@ const ProductInfo = ({ data }) => {
   const [iconCheck, setIconCheck] = useState(0);
   const [count, setCount] = useState(1);
   const dispatch = useDispatch();
-  
+
   const handleAddToCart = useCallback(() => {
-    dispatch(addItem({ ...data, quantity: count, size, color: data.colors[iconCheck] }));
+    dispatch(
+      addItem({ ...data, quantity: count, size, color: data.colors[iconCheck] })
+    );
   }, [dispatch, data, count, size, iconCheck]);
-  
+
   return (
     <>
       <h1 className="md:text-[30px] text-[26px] font-[400] md:mb-[30px] mb-[10px]">
@@ -110,20 +112,27 @@ const ProductInfo = ({ data }) => {
       {/* Выбор цвета */}
       <p className={styles.divColors}>Выберите цвета</p>
       <ColorSelector
-        colors={data.product_colors.map( ({colors}) =>colors.name )}
+        colors={data.product_colors.map(({ colors }) => colors.name)}
         selectedColor={iconCheck}
         onSelect={setIconCheck}
       />
-      
+
       {/* Выбор размера */}
       <p className="text-[#00000099] pt-[24px] pb-[16px]">Выберите размер</p>
-      <SizeSelector sizes={["Small", "Medium", "Large", "X-Large"]} selectedSize={size} onSelect={setSize} />
-      
+      <SizeSelector
+        sizes={["Small", "Medium", "Large", "X-Large"]}
+        selectedSize={size}
+        onSelect={setSize}
+      />
+
       {/* Инкремент количества и добавление в корзину */}
       <div className="flex items-center gap-[20px]">
         <IncrementItem count={count} setCount={setCount} />
         <div className="flex-grow">
-          <CommonButton onClick={handleAddToCart} className="bg-[#000] text-[#fff] w-full py-[14px]">
+          <CommonButton
+            onClick={handleAddToCart}
+            className="bg-[#000] text-[#fff] w-full py-[14px]"
+          >
             Add to Cart
           </CommonButton>
         </div>
