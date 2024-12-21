@@ -99,7 +99,23 @@ class ProductApi {
 		}
 	}
 	
-	
+	async getProductColors() {
+		try {
+			const { data, error } = await supabase
+				.from('colors')
+				.select('id, name');
+			
+			if (error) {
+				console.error('Ошибка при получении цветов:', error.message);
+				throw new Error('Не удалось получить цвета. Попробуйте позже.');
+			}
+			
+			return {data}; // Возвращаем только данные
+		} catch (err) {
+			console.error('Ошибка при получении цветов:', err);
+			throw err;
+		}
+	}
 }
 
 export default new ProductApi();
