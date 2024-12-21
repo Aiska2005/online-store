@@ -2,7 +2,6 @@
 
 /* Wrapper for the whole container */
 .add-product-container {
-    max-width: 6xl;
     margin: 0 auto;
     padding: 2rem;
     background-color: white;
