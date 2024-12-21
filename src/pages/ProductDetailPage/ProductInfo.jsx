@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { addItem } from "../../redux/slices/cartSlice";
 import CommonButton from "../../Components/ui/buttons/CommonButton";
 import styles from "./product-detail.module.css";
+import { useNavigate } from "react-router-dom";
 
 // Компонент для выбора цвета
 const ColorSelector = ({ colors, selectedColor, onSelect }) => (
@@ -93,12 +94,20 @@ const ProductInfo = ({ data }) => {
   const [iconCheck, setIconCheck] = useState(0);
   const [count, setCount] = useState(1);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleAddToCart = useCallback(() => {
     dispatch(
-      addItem({ ...data, quantity: count, size, color: data.colors[iconCheck] })
+      addItem({
+        id: data.id,
+        quantity: count,
+        size,
+        color: data.colors[iconCheck],
+        ...data,
+      })
     );
-  }, [dispatch, data, count, size, iconCheck]);
+    navigate(`/cart/${data.id}`);
+  }, [dispatch, data, count, size, iconCheck, navigate]);
 
   return (
     <>
@@ -120,7 +129,7 @@ const ProductInfo = ({ data }) => {
       {/* Выбор размера */}
       <p className="text-[#00000099] pt-[24px] pb-[16px]">Выберите размер</p>
       <SizeSelector
-        sizes={["Small", "Medium", "Large", "X-Large"]}
+        sizes={["маленький", "Середина", "Большой", "Очень большой"]}
         selectedSize={size}
         onSelect={setSize}
       />
@@ -133,7 +142,7 @@ const ProductInfo = ({ data }) => {
             onClick={handleAddToCart}
             className="bg-[#000] text-[#fff] w-full py-[14px]"
           >
-            Add to Cart
+            Добавить в корзину
           </CommonButton>
         </div>
       </div>

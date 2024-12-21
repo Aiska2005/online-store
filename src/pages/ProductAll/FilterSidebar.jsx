@@ -21,17 +21,23 @@ const FilterSidebar = () => {
     "#000000",
   ];
   const sizes = [
-    "XX-Small",
-    "X-Small",
-    "Small",
-    "Medium",
-    "Large",
-    "X-Large",
-    "XX-Large",
-    "3X-Large",
-    "4X-Large",
+    "XX-Маленький",
+    "X-Маленький",
+    "Маленький",
+    "Средний",
+    "Большой",
+    "X-Большой",
+    "XX-Большой",
+    "3X-Большой",
+    "4X-Большой",
   ];
-  const dressStyles = ["Casual", "Formal", "Party", "Gym"];
+
+  const dressStyles = [
+    "Повседневный",
+    "Официальный",
+    "Вечеринка",
+    "Спортивный",
+  ];
 
   const toggleSection = (section) => {
     setOpenSection(openSection === section ? null : section);
@@ -40,7 +46,7 @@ const FilterSidebar = () => {
   return (
     <div className="w-full lg:w-64 p-2 lg:p-4 border rounded-lg shadow-md bg-white">
       <h2 className="text-lg font-bold mb-4 text-center lg:text-left">
-        Filters
+        Фильтры
       </h2>
 
       {/* Price Filter */}
@@ -49,7 +55,7 @@ const FilterSidebar = () => {
           className="flex justify-between items-center cursor-pointer"
           onClick={() => toggleSection("price")}
         >
-          <h3 className="font-medium text-sm lg:text-base">Price</h3>
+          <h3 className="font-medium text-sm lg:text-base">Цена</h3>
           <span>
             {openSection === "price" ? (
               <img src={ArrowUpIcon} alt="Collapse" />
@@ -90,7 +96,7 @@ const FilterSidebar = () => {
           className="flex justify-between items-center cursor-pointer"
           onClick={() => toggleSection("colors")}
         >
-          <h3 className="font-medium text-sm lg:text-base">Colors</h3>
+          <h3 className="font-medium text-sm lg:text-base">Цвета</h3>
           <span>
             {openSection === "colors" ? (
               <img src={ArrowUpIcon} alt="Collapse" />
@@ -121,7 +127,7 @@ const FilterSidebar = () => {
           className="flex justify-between items-center cursor-pointer"
           onClick={() => toggleSection("sizes")}
         >
-          <h3 className="font-medium text-sm lg:text-base">Sizes</h3>
+          <h3 className="font-medium text-sm lg:text-base">Размеры</h3>
           <span>
             {openSection === "sizes" ? (
               <img src={ArrowUpIcon} alt="Collapse" />
@@ -155,7 +161,7 @@ const FilterSidebar = () => {
           className="flex justify-between items-center cursor-pointer"
           onClick={() => toggleSection("dressStyles")}
         >
-          <h3 className="font-medium text-sm lg:text-base">Dress Style</h3>
+          <h3 className="font-medium text-sm lg:text-base">Стиль платья</h3>
           <span>
             {openSection === "dressStyles" ? (
               <img src={ArrowUpIcon} alt="Collapse" />

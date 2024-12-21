@@ -75,7 +75,7 @@ const HomePage = () => {
                       d="M18.796 4H5.204a1 1 0 0 0-.753 1.659l5.302 6.058a1 1 0 0 1 .247.659v4.874a.5.5 0 0 0 .2.4l3 2.25a.5.5 0 0 0 .8-.4v-7.124a1 1 0 0 1 .247-.659l5.302-6.059c.566-.646.106-1.658-.753-1.658Z"
                     />
                   </svg>
-                  Filters
+                  Фильтры
                   <svg
                     className="-me-0.5 ms-2 h-4 w-4"
                     aria-hidden="true"
@@ -117,7 +117,7 @@ const HomePage = () => {
                       d="M7 4v16M7 4l3 3M7 4 4 7m9-3h6l-6 6h6m-6.5 10 3.5-7 3.5 7M14 18h4"
                     />
                   </svg>
-                  Sort
+                  Сортировать
                   <svg
                     className="-me-0.5 ms-2 h-4 w-4"
                     aria-hidden="true"
@@ -1895,11 +1895,12 @@ const ProductCard = ({ image, name, price, id }) => {
           </div>
         </div>
         <div className={"flex flex-col  justify-between"}>
-          <div>
-            <p className="text-lg font-semibold leading-tight mb-2 line-clamp-2">
+          <div className="h-[50px] sm:h-[60px] md:h-[70px]">
+            <p className="text-base sm:text-lg md:text-xl font-semibold leading-tight mb-2 line-clamp-2">
               {name}
             </p>
           </div>
+
           <div>
             <ul className="mt-2 flex items-center gap-4">
               <li className="flex items-center gap-2">

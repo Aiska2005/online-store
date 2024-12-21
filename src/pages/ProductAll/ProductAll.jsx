@@ -116,8 +116,8 @@ const ProductAll = () => {
                       </div>
                     </div>
                     <div className="flex flex-col justify-between">
-                      <div>
-                        <p className="text-lg font-semibold leading-tight mb-2 line-clamp-2">
+                      <div className="h-[50px] sm:h-[60px] md:h-[70px]">
+                        <p className="text-base sm:text-lg md:text-xl font-semibold leading-tight mb-2 line-clamp-2">
                           {item.name}
                         </p>
                       </div>

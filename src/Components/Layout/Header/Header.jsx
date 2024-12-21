@@ -24,7 +24,7 @@ const Header = () => {
             <IoSearchOutline className="h-5 w-5 text-gray-400" />
             <input
               className="bg-transparent focus:outline-none px-4 flex-grow text-gray-800 placeholder-gray-500"
-              placeholder="Search for products..."
+              placeholder="Поиск товара..."
               type="text"
             />
           </div>
