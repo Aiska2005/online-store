@@ -4,19 +4,17 @@ class FileUploadApi {
 		formData.append('file', file);
 		formData.append('upload_preset', 'ml_default');
 		// formData.append('folder', path);
-		
-		const response = await fetch(process.env.REACT_APP_CLOUDINARY_URL + '/image/upload', {
-			method: 'POST',
-			body: formData,
-		});
-		
-		if (!response.ok) {
-			throw new Error('Ошибка загрузки изображения');
+		if (process.env.REACT_APP_CLOUDINARY_URL) {
+			const response = await fetch(process.env.REACT_APP_CLOUDINARY_URL + '/image/upload', {
+				method: 'POST',
+				body: formData,
+			});
+			
+			if (!response.ok) {
+				throw new Error('Ошибка загрузки изображения');
+			}
+			return await response.json(); // Возвращаем URL загруженного изображения
 		}
-		
-		const data = await response.json();
-		console.log(data,'data---upload');
-		return data; // Возвращаем URL загруженного изображения
 	};
 	
 	async deleteFile(publicId) {
@@ -49,9 +47,6 @@ class FileUploadApi {
 		console.log(data, 'data---delete');
 		return data; // Возвращаем результат удаления
 	}
-
-
-	
 }
 
 export default FileUploadApi;

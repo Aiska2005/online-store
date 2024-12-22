@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
-import { message } from 'antd'; // Импортируем компонент message из Ant Design
+import {useState, useEffect} from 'react';
+import {message} from 'antd'; // Импортируем компонент message из Ant Design
 import productApi from '../../../service/product.api';
 import FileUploadApi from '../../../service/file-upload.api';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import SelectField from '../../../Components/ui/select-field/SelectField';
 import InputField from '../../../Components/ui/input-field/InputField';
 import TextareaField from '../../../Components/ui/text-area/TextArea';
@@ -22,6 +22,7 @@ const AddProduct = () => {
 		category_id: '',
 		subcategory_id: '',
 	});
+	const [productColor, setProductColor] = useState("");
 	const [error, setError] = useState(null);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [images, setImages] = useState([]);
@@ -33,15 +34,22 @@ const AddProduct = () => {
 	const fileUploadApi = new FileUploadApi();
 	
 	useEffect(() => {
-		productApi.getCategories().then(({ data }) => setCategories(data));
-		productApi.getSubcategories().then(({ data }) => setSubcategories(data));
-		productApi.getProductColors().then(({ data }) => setColors(data));
+		productApi.getCategories().then(({data}) => setCategories(data));
+		productApi.getSubcategories().then(({data}) => setSubcategories(data));
+		productApi.getProductColors().then(({data}) => setColors(data));
 	}, []);
 	
 	const handleInputChange = (e) => {
-		const { name, value } = e.target;
-		setFormData((prevState) => ({ ...prevState, [name]: value }));
+		const {name, value} = e.target;
+		console.log(name, value)
+		setFormData((prevState) => ({...prevState, [name]: value}));
 	};
+	
+	const handleInputColorChange = (e) => {
+		const { value } = e.target;
+		console.log(value);
+		setProductColor(value)
+	}
 	
 	const handleImageChange = (e) => {
 		const selectedFiles = Array.from(e.target.files);
@@ -89,20 +97,17 @@ const AddProduct = () => {
 			setUploadingImages((prevUploading) => [...prevUploading, file.name]); // Добавляем файл в список загружаемых
 			const path = `uploads/${file.name}`;
 			const imageUrl = await fileUploadApi.uploadFile(compressedFile, path);
+			console.log(imageUrl, 'ERRRRRR');
 			setImages((oldImages) => {
 				return [...oldImages, imageUrl];
 			});
-			
-			setFormData((prevData) => ({
-				...prevData,
-				images: [...prevData.images, imageUrl.secure_url], // Добавляем загруженную картинку в массив изображений
-			}));
 		} catch (error) {
 			console.error('Ошибка при загрузке изображения:', error);
 			setError('Не удалось загрузить одно или несколько изображений. Попробуйте снова.');
 			setTimeout(() => setError(null), 6000);
 		} finally {
-			setUploadingImages((prevUploading) => prevUploading.filter((name) => name !== file.name)); // Убираем файл из списка загружаемых
+			setUploadingImages((prevUploading) => prevUploading.filter((name) => name !== file.name)); // Убираем файл из
+			                                                                                           // списка загружаемых
 		}
 	};
 	
@@ -114,6 +119,7 @@ const AddProduct = () => {
 		console.log(public_id, 'deleteImage');
 		// await fileUploadApi.deleteFile("blob_bk3llj");
 	};
+	
 	const handleAddProduct = async () => {
 		// Проверка на заполнение всех полей
 		if (!formData.name.trim() || !formData.price || !formData.description.trim() || !formData.category_id || !formData.subcategory_id) {
@@ -137,32 +143,23 @@ const AddProduct = () => {
 				stock: parseInt(formData.stock, 10),
 				category_id: parseInt(formData.category_id, 10),
 				subcategory_id: parseInt(formData.subcategory_id, 10),
+				images: [images[0]?.secure_url],
 			};
 			
 			// Создаем товар на сервере и получаем его ID
 			const productResponse = await productApi.addProduct(newProduct);
-			const productId = productResponse.data.id;
+			console.log(productResponse, 'productResponse-------')
+			const productId = productResponse.id;
 			
 			// Загрузка изображений
-			for (const file of files) {
-				const compressedFile = await imageCompression(file, {
-					maxSizeMB: 1,
-					maxWidthOrHeight: 1920,
-					useWebWorker: true,
-				});
-				
-				setUploadingImages((prevUploading) => [...prevUploading, file.name]); // Указываем, что файл загружается
-				const imageUrl = await fileUploadApi.uploadFile(compressedFile);
-				
-				const imageData = {
-					product_id: productId, // связываем изображение с продуктом
-					color: formData.colors, // если цвет выбран, добавляем его
-					image_url: imageUrl.secure_url, // URL загруженного изображения
-				};
-				
-				// Отправляем изображение на сервер
-				await productApi.addProductImage(imageData);
-			}
+			const imageData = {
+				product_id: productId, // связываем изображение с продуктом
+				color: productColor, // если цвет выбран, добавляем его
+				images, // URL загруженного изображения
+			};
+			
+			// Отправляем изображение на сервер
+			await productApi.addProductImage(imageData);
 			
 			message.success('Продукт и изображения успешно добавлены');
 			resetForm();
@@ -237,10 +234,11 @@ const AddProduct = () => {
 							label="Цвета"
 							name="colors"
 							value={formData.colors}
+							onChange={handleInputColorChange}
 							options={[
-								{ value: '', label: 'Выберите цвет' },
-								...colors.map(({ id, name }) => ({
-									value: id,
+								{value: '', label: 'Выберите цвет'},
+								...colors.map(({id, name}) => ({
+									value: name,
 									label: name,
 								})),
 							]}
@@ -253,8 +251,8 @@ const AddProduct = () => {
 							name="category_id"
 							value={formData.category_id}
 							options={[
-								{ value: '', label: 'Выберите категорию' },
-								...categories.map(({ id, name }) => ({
+								{value: '', label: 'Выберите категорию'},
+								...categories.map(({id, name}) => ({
 									value: id,
 									label: name,
 								})),
@@ -266,9 +264,9 @@ const AddProduct = () => {
 							name="subcategory_id"
 							value={formData.subcategory_id}
 							options={[
-								{ value: '', label: 'Выберите подкатегорию' },
-								...subcategories.map(({ category_id, name }) => ({
-									value: category_id,
+								{value: '', label: 'Выберите подкатегорию'},
+								...subcategories.map(({id, name}) => ({
+									value: id,
 									label: name,
 								})),
 							]}
@@ -306,7 +304,7 @@ const AddProduct = () => {
 									/>
 									<button
 										type="button"
-										onClick={() => handleDeleteImage(index, images[index].public_id)}
+										onClick={() => handleDeleteImage(index)}
 										className="absolute top-2 right-2 bg-red-600 text-white text-xs px-2 py-1 rounded shadow group-hover:opacity-100 transition-opacity opacity-0"
 									>
 										Удалить
