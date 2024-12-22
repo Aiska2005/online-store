@@ -26,6 +26,11 @@ class ProductApi {
 			        id,
 			        name
 			      )
+			    ),
+			     product_images (
+			      id,
+			      images,
+			      color
 			    )
 			  `)
 				.eq('id', productId)
@@ -35,13 +40,18 @@ class ProductApi {
 				return null;
 			}
 			
-			// Формируем удобный объект с цветами
-			const productWithColors = {
+			// Формируем удобный объект с цветами и изображениями
+			const productWithDetails = {
 				...data,
 				colors: data.product_colors.map((pc) => pc.colors), // Извлекаем массив цветов
+				images: data.product_images.map((pi) => ({
+					id: pi.id,
+					urls: pi.images, // Если images — это JSONB массив URL
+					color: pi.color,
+				})), // Извлекаем изображения
 			};
 			
-			return productWithColors;
+			return productWithDetails;
 		} catch (error) {
 			console.error('Unexpected error:', error);
 			return null;
@@ -99,7 +109,48 @@ class ProductApi {
 		}
 	}
 	
+	async getProductColors() {
+		try {
+			const {data, error} = await supabase
+				.from('colors')
+				.select('id, name');
+			
+			if (error) {
+				console.error('Ошибка при получении цветов:', error.message);
+				throw new Error('Не удалось получить цвета. Попробуйте позже.');
+			}
+			
+			return {data}; // Возвращаем только данные
+		} catch (err) {
+			console.error('Ошибка при получении цветов:', err);
+			throw err;
+		}
+	}
 	
+	async addProductImage({product_id, images, color}) {
+		try {
+			const {data, error} = await supabase
+				.from('product_images') // Замените на имя вашей таблицы
+				.insert([
+					{
+						product_id, // ID продукта
+						images, // JSONB массив изображений
+						color, // Цвет изображения
+					},
+				]);
+			
+			if (error) {
+				console.error('Ошибка при добавлении изображения продукта:', error);
+				throw error;
+			}
+			
+			console.log('Изображение продукта успешно добавлено:', data);
+			return data;
+		} catch (err) {
+			console.error('Ошибка выполнения функции addProductImage:', err);
+			throw err;
+		}
+	}
 }
 
 export default new ProductApi();

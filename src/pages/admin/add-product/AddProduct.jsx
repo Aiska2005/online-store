@@ -1,12 +1,13 @@
-import { useState } from 'react';
+import {useState, useEffect} from 'react';
+import {message} from 'antd'; // Импортируем компонент message из Ant Design
 import productApi from '../../../service/product.api';
 import FileUploadApi from '../../../service/file-upload.api';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import SelectField from '../../../Components/ui/select-field/SelectField';
 import InputField from '../../../Components/ui/input-field/InputField';
 import TextareaField from '../../../Components/ui/text-area/TextArea';
 import imageCompression from 'browser-image-compression';
-import './AddProduct.css'; // Import the CSS file
+import './AddProduct.css';
 
 const AddProduct = () => {
 	const navigate = useNavigate();
@@ -20,18 +21,35 @@ const AddProduct = () => {
 		stock: '',
 		category_id: '',
 		subcategory_id: '',
-		images: [],
 	});
+	const [productColor, setProductColor] = useState("");
 	const [error, setError] = useState(null);
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [images, setImages] = useState([]);
+	const [categories, setCategories] = useState([]);
+	const [colors, setColors] = useState([]);
+	const [subcategories, setSubcategories] = useState([]);
 	const [uploadingImages, setUploadingImages] = useState([]); // Стейт для отслеживания загрузки изображений
 	
-	const fileUploadApi = new FileUploadApi('photos');
+	const fileUploadApi = new FileUploadApi();
+	
+	useEffect(() => {
+		productApi.getCategories().then(({data}) => setCategories(data));
+		productApi.getSubcategories().then(({data}) => setSubcategories(data));
+		productApi.getProductColors().then(({data}) => setColors(data));
+	}, []);
 	
 	const handleInputChange = (e) => {
-		const { name, value } = e.target;
-		setFormData((prevState) => ({ ...prevState, [name]: value }));
+		const {name, value} = e.target;
+		console.log(name, value)
+		setFormData((prevState) => ({...prevState, [name]: value}));
 	};
+	
+	const handleInputColorChange = (e) => {
+		const { value } = e.target;
+		console.log(value);
+		setProductColor(value)
+	}
 	
 	const handleImageChange = (e) => {
 		const selectedFiles = Array.from(e.target.files);
@@ -44,7 +62,7 @@ const AddProduct = () => {
 		}
 		
 		// Проверка формата файлов (например, только изображения)
-		const validFileTypes = ['image/jpeg','image/jpg', 'image/png','image/webp','image/HEIC',];
+		const validFileTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/HEIC'];
 		const invalidFiles = selectedFiles.filter(file => !validFileTypes.includes(file.type));
 		
 		if (invalidFiles.length > 0) {
@@ -76,66 +94,84 @@ const AddProduct = () => {
 		const compressedFile = await imageCompression(file, options);
 		
 		try {
-			setUploadingImages((prevUploading) => [...prevUploading, file.name]); // Добавляем файл в список загружаемых изображений
+			setUploadingImages((prevUploading) => [...prevUploading, file.name]); // Добавляем файл в список загружаемых
 			const path = `uploads/${file.name}`;
 			const imageUrl = await fileUploadApi.uploadFile(compressedFile, path);
-			
-			setFormData((prevData) => ({
-				...prevData,
-				images: [...prevData.images, imageUrl], // Добавляем загруженную картинку в массив изображений
-			}));
+			console.log(imageUrl, 'ERRRRRR');
+			setImages((oldImages) => {
+				return [...oldImages, imageUrl];
+			});
 		} catch (error) {
 			console.error('Ошибка при загрузке изображения:', error);
 			setError('Не удалось загрузить одно или несколько изображений. Попробуйте снова.');
 			setTimeout(() => setError(null), 6000);
 		} finally {
-			setUploadingImages((prevUploading) => prevUploading.filter((name) => name !== file.name)); // Убираем файл из списка загружаемых
+			setUploadingImages((prevUploading) => prevUploading.filter((name) => name !== file.name)); // Убираем файл из
+			                                                                                           // списка загружаемых
 		}
 	};
 	
-	const handleDeleteImage = (index) => {
+	const handleDeleteImage = async (index, public_id) => {
 		const updatedFiles = files.filter((_, idx) => idx !== index);
 		const updatedPreviewUrls = previewUrls.filter((_, idx) => idx !== index);
 		setFiles(updatedFiles);
 		setPreviewUrls(updatedPreviewUrls);
+		console.log(public_id, 'deleteImage');
+		// await fileUploadApi.deleteFile("blob_bk3llj");
 	};
 	
 	const handleAddProduct = async () => {
 		// Проверка на заполнение всех полей
 		if (!formData.name.trim() || !formData.price || !formData.description.trim() || !formData.category_id || !formData.subcategory_id) {
-			setError('Пожалуйста, заполните все поля.');
-			setTimeout(() => setError(null), 3000);
+			message.error('Пожалуйста, заполните все поля.');
 			return;
 		}
 		
 		// Проверка на загрузку изображений
 		if (uploadingImages.length > 0) {
-			setError('Подождите, пока изображения загрузятся.');
+			message.error('Подождите, пока изображения загрузятся.');
 			return;
 		}
 		
 		setIsSubmitting(true);
 		
 		try {
+			// Создаем продукт
 			const newProduct = {
 				...formData,
 				price: parseFloat(formData.price),
 				stock: parseInt(formData.stock, 10),
 				category_id: parseInt(formData.category_id, 10),
 				subcategory_id: parseInt(formData.subcategory_id, 10),
+				images: [images[0]?.secure_url],
 			};
 			
-			await productApi.addProduct(newProduct);
-			alert('Продукт успешно добавлен');
+			// Создаем товар на сервере и получаем его ID
+			const productResponse = await productApi.addProduct(newProduct);
+			console.log(productResponse, 'productResponse-------')
+			const productId = productResponse.id;
+			
+			// Загрузка изображений
+			const imageData = {
+				product_id: productId, // связываем изображение с продуктом
+				color: productColor, // если цвет выбран, добавляем его
+				images, // URL загруженного изображения
+			};
+			
+			// Отправляем изображение на сервер
+			await productApi.addProductImage(imageData);
+			
+			message.success('Продукт и изображения успешно добавлены');
 			resetForm();
 			navigate('/admin/products/');
 		} catch (error) {
 			console.error('Ошибка при добавлении продукта:', error);
-			setError('Не удалось добавить продукт. Попробуйте снова.');
+			message.error('Не удалось добавить продукт. Попробуйте снова.');
 		} finally {
 			setIsSubmitting(false);
 		}
 	};
+	
 	
 	const resetForm = () => {
 		previewUrls.forEach((url) => URL.revokeObjectURL(url));
@@ -146,7 +182,6 @@ const AddProduct = () => {
 			stock: '',
 			category_id: '',
 			subcategory_id: '',
-			images: [],
 		});
 		setFiles([]);
 		setPreviewUrls([]);
@@ -186,13 +221,30 @@ const AddProduct = () => {
 						value={formData.description}
 						onChange={handleInputChange}
 					/>
-					<InputField
-						label="Количество на складе"
-						name="stock"
-						type="number"
-						value={formData.stock}
-						onChange={handleInputChange}
-					/>
+					<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+						<InputField
+							label="Количество на складе"
+							name="stock"
+							type="number"
+							hintText="1"
+							value={formData.stock}
+							onChange={handleInputChange}
+						/>
+						<SelectField
+							label="Цвета"
+							name="colors"
+							value={formData.colors}
+							onChange={handleInputColorChange}
+							options={[
+								{value: '', label: 'Выберите цвет'},
+								...colors.map(({id, name}) => ({
+									value: name,
+									label: name,
+								})),
+							]}
+							multiple
+						/>
+					</div>
 					<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 						<SelectField
 							label="Категория"
@@ -200,8 +252,10 @@ const AddProduct = () => {
 							value={formData.category_id}
 							options={[
 								{value: '', label: 'Выберите категорию'},
-								{value: '1', label: 'Мужчины'},
-								{value: '2', label: 'Женщины'},
+								...categories.map(({id, name}) => ({
+									value: id,
+									label: name,
+								})),
 							]}
 							onChange={handleInputChange}
 						/>
@@ -211,10 +265,10 @@ const AddProduct = () => {
 							value={formData.subcategory_id}
 							options={[
 								{value: '', label: 'Выберите подкатегорию'},
-								{value: '1', label: 'Футболки'},
-								{value: '2', label: 'Брюки'},
-								{value: '3', label: 'Двойка для Девушек'},
-								{value: '5', label: 'Платье'},
+								...subcategories.map(({id, name}) => ({
+									value: id,
+									label: name,
+								})),
 							]}
 							onChange={handleInputChange}
 						/>
@@ -308,8 +362,6 @@ const AddProduct = () => {
 				</button>
 			</div>
 		</div>
-	
-	
 	);
 };
 
